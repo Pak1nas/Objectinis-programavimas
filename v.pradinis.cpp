@@ -1,62 +1,121 @@
 #include <bits/stdc++.h>
-
 using namespace std;
 
-struct stud{
+struct stud {
     string vardas;
     string pavarde;
-    vector<double>tarp;
+    vector<double> tarp;
     double egz;
     double vid;
     double med;
 };
 
-int main()
-{
-    int n, m, knt, did=0;
-    double sum=0, kntd=0;
+double atsitiktinis() {
+    return rand()%11;
+}
 
-    cin>>m;
-    cin>>n;
+void skaiciuoti(stud &s) {
+    double sum=s.egz;
+    for (double x:s.tarp) sum += x;
+    s.vid=sum/(s.tarp.size()+1);
 
-    stud a[m];
+    sort(s.tarp.begin(), s.tarp.end());
+    int d=s.tarp.size();
+    if (d%2==0)
+        s.med=(s.tarp[d/2]+s.tarp[d/2-1])/2.0;
+    else
+        s.med=s.tarp[d/2];
+}
 
-    for(int i=0; i<m; i++){
-         cin>>a[i].vardas>>a[i].pavarde;
-        for(int j=0; j<n; j++){
-            cin>>knt;
-            a[i].tarp.push_back(knt);
-            sum+=knt;
+int main() {
+    srand(time(NULL));
+    vector<stud> A;
+
+    while (true) {
+        cout<<"1-Rankinis studentu ivedimas"<<endl;
+        cout<<"2-Generuoti tik pazymius"<<endl;
+        cout<<"3-Generuoti vardus, pavardes ir pazymius"<<endl;
+        cout<<"4-Baigti darba"<<endl;
+        cout<<"Pasirinkite:"<<endl;
+
+        int pasirinkimas;
+        cin>>pasirinkimas;
+
+        if (pasirinkimas==4) {
+            cout<<"Programa baigta."<<endl;
+            break;
         }
-        cin>>a[i].egz;
-        sum+=a[i].egz;
 
-        a[i].vid=sum/(n+1);
+        if (pasirinkimas==1) {
+            stud s;
+            cout<<"Iveskite varda ir tada pavarde:"<<endl;
+            cin>>s.vardas >> s.pavarde;
 
-        sort(a[i].tarp.begin(), a[i].tarp.end());
-        did=a[i].tarp.size();
-        if(did%2==0){
-            did=did/2;
-            kntd=(a[i].tarp[did]+a[i].tarp[did-1])/2;
-            a[i].med=kntd;
+            cout<<"Iveskite namu darbu rezultatus (neigiamas skaicius baigia):"<< endl;
+            while (true) {
+                double x;
+                cin>>x;
+                if (x<0) break;
+                s.tarp.push_back(x);
+            }
+
+            cout<<"Egzamino rezultatas: "<<endl;
+            cin>>s.egz;
+
+            skaiciuoti(s);
+            A.push_back(s);
         }
-        else{
-            did=did/2;
-            a[i].med=a[i].tarp[did];
+
+        else if (pasirinkimas==2) {
+            stud s;
+            cout<<"Iveskite varda ir pavarde: "<<endl;
+            cin>>s.vardas >> s.pavarde;
+
+            int nd;
+            cout<<"Kiek generuoti namu darbu? "<<endl;
+            cin>>nd;
+
+            for (int i = 0; i<nd; i++)
+                s.tarp.push_back(atsitiktinis());
+
+            s.egz=atsitiktinis();
+
+            skaiciuoti(s);
+            A.push_back(s);
+        }
+
+        else if (pasirinkimas==3) {
+            stud s;
+
+            static vector<string>vardai={"Mykolas","Darius","Motejus", "Nojus", "Jonas"};
+            static vector<string>pavardes={"Matulis","Navierauskas","Motejunas","Stankus","Mezetis"};
+
+            s.vardas=vardai[rand()%vardai.size()];
+            s.pavarde=pavardes[rand()%pavardes.size()];
+
+            int nd = rand()%7+3;
+            for (int i = 0; i<nd; i++)
+                s.tarp.push_back(atsitiktinis());
+
+            s.egz=atsitiktinis();
+
+            skaiciuoti(s);
+            A.push_back(s);
+
+            cout<<"Sugeneruotas studentas: "<<s.vardas<<" "<<s.pavarde<<endl;
+        }
+
+        else {
+            cout<<"Neteisingas pasirinkimas"<<endl;
         }
     }
 
-    cout<<"Vardas      Pavarde      Galutinis(vid.) / Galutinis(Med.)"<<endl;
-    cout<<"------------------------------------------"<<endl;
+    cout<<left<<setw(15)<<"Pavarde"<<left<<setw(15)<<"Vardas"<<right<<setw(20)<<"Galutinis (Vid.)"<<right<<setw(20)<<"Galutinis (Med.)"<<endl;
 
-    for(int i=0; i<m; i++){
+    cout<<string(70,'-')<<endl;
 
-        cout<<a[i].vardas<<"      "<<a[i].pavarde<<"      "<<a[i].vid<<"      "<<a[i].med<<endl;
-    }
-
-
-
-
+    for (auto &s:A)
+        cout<<left<<setw(15)<<s.pavarde<<left<<setw(15)<<s.vardas<<right<<setw(20)<<fixed<<setprecision(2)<<s.vid<<right<<setw(20)<<fixed<<setprecision(2)<<s.med<<endl;
 
     return 0;
 }
