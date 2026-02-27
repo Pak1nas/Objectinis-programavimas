@@ -126,6 +126,20 @@ int main() {
 
         else if (pasirinkimas==4){
 
+            ifstream duom("kursiokai.txt");
+            if(!duom){
+                cout<<"Nepavyko atidaryti failo"<<endl;
+                continue;
+            }
+
+            string eil;
+
+            if(!getline(duom, eil)){
+                cout<<"Failas tuscias"<<endl;
+                duom.close();
+                continue;
+            }
+
         }
 
         else {
@@ -133,13 +147,6 @@ int main() {
         }
     }
 
-    /*cout<<left<<setw(15)<<"Pavarde"<<left<<setw(15)<<"Vardas"<<right<<setw(20)<<"Galutinis (Vid.)"<<right<<setw(20)<<"Galutinis (Med.)"<<endl;
-
-    cout<<string(70,'-')<<endl;
-
-    for (auto &s:A)
-        cout<<left<<setw(15)<<s.pavarde<<left<<setw(15)<<s.vardas<<right<<setw(20)<<fixed<<setprecision(2)<<s.vid<<right<<setw(20)<<fixed<<setprecision(2)<<s.med<<endl;
-*/
     spausdinti_lentele(A);
 
     return 0;
