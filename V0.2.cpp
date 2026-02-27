@@ -140,6 +140,49 @@ int main() {
                 continue;
             }
 
+            bool header=false;
+            for(char c : eil){
+                if(isalpha(static_cast<unsigned char>(c))){
+                    header=true;
+                    break;
+                }
+            }
+            if(!header){
+                istringstream ars(eil);
+                stud s;
+                if(ars>>s.vardas>>s.pavarde){
+                    vector<double>vals;
+                    double v;
+                    while(ars>>v) vals.push_back(v);
+                    if(!vals.empty()){
+                        s.egz=vals.back();
+                        vals.pop_back();
+                        s.tarp=move(vals);
+                    }
+                    skaiciuoti(s);
+                    A.push_back(move(s));
+                }
+            }
+
+            while(getline(duom, eil)){
+                if(eil.find_first_not_of(" \t\r\n")==string::npos) continue;
+                istringstream ars(eil);
+                stud s;
+                if(!(ars>>s.vardas>>s.pavarde)) continue;
+                vector<double>vals;
+                double v;
+                while(ars>>v) vals.push_back(v);
+                if(!vals.empty()){
+                    s.egz=vals.back();
+                    vals.pop_back();
+                    s.tarp=move(vals);
+                }
+                skaiciuoti(s);
+                A.push_back(move(s));
+            }
+            duom.close();
+            cout<<"Faile buvo rasta: "<<A.size()<<" stundentu"<<endl;
+
         }
 
         else {
