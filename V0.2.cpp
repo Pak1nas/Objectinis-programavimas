@@ -190,6 +190,31 @@ int main() {
         }
     }
 
+    cout<<"1-Rusiavimas pagal varda"<<endl;
+    cout<<"2-Rusiavimas pagal pavarde"<<endl;
+    cout<<"3-Rusiavimas pagal galutini (vidurki)"<<endl;
+    cout<<"4-Rusiavimas pagal galutini (mediana)"<<endl;
+    cout<<"Pasirinkite 1"<<endl;
+
+    int rus;
+    if(!(cin>>rus)) rus=1;
+
+    switch(rus){
+    case 1:
+        sort(A.begin(), A.end(),[](const stud &a, const stud &b){return a.vardas<b.vardas;});
+        break;
+    case 2:
+        sort(A.begin(), A.end(), [](const stud &a, const stud &b){return a.pavarde<b.pavarde;});
+        break;
+    case 3:
+        sort(A.begin(), A.end(), [](const stud &a, const stud &b){return a.vid>b.vid;});
+        break;
+    case 4:
+        sort(A.begin(), A.end(), [](const stud &a, const stud &b){return a.med>b.med;});
+        break;
+
+    }
+
     spausdinti_lentele(A);
 
     return 0;
