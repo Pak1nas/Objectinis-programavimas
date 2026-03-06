@@ -89,8 +89,6 @@ int main() {
 
         int  pasirinkimas=s_int();
 
-        int pasirinkimas;
-
         if(!(cin>>pasirinkimas)){
             cin.clear();
             string kintamasis;
@@ -112,14 +110,13 @@ int main() {
 
             cout<<"Iveskite namu darbu rezultatus (neigiamas skaicius baigia):"<<endl;
             while (true) {
-                double x;
-                cin>>x;
-                if (x<0) break;
+                double x=s_double();
+                if(x<0) break;
                 s.tarp.push_back(x);
             }
 
             cout<<"Egzamino rezultatas: "<<endl;
-            cin>>s.egz;
+            s.egz=s_double();
 
             skaiciuoti(s);
             A.push_back(s);
