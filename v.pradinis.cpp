@@ -18,6 +18,23 @@ int s_int(){
     }
 }
 
+double s_double(){
+    while(true){
+        try{
+            double x;
+            cin>>x;
+            return x;
+        }
+        catch (const ios::failure&){
+            cin.clear();
+            string kld;
+            getline(cin, kld);
+            cout<<"Klaida: iveskite skaiciu"<<endl;
+        }
+    }
+
+}
+
 struct stud {
     string vardas;
     string pavarde;
