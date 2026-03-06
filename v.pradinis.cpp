@@ -1,6 +1,23 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+
+int s_int(){
+    while(true){
+        try{
+            int x;
+            cin>>x;
+            return x;
+        }
+        catch(const ios::failure&){
+        cin.clear();
+        string kld;
+        getline(cin, kld);
+        cout<<"Klaida: iveskite skaiciu"<<endl;
+        }
+    }
+}
+
 struct stud {
     string vardas;
     string pavarde;
