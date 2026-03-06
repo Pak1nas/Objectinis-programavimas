@@ -126,6 +126,63 @@ int main() {
 
         else if (pasirinkimas==4){
 
+            ifstream duom("kursiokai.txt");
+            if(!duom){
+                cout<<"Nepavyko atidaryti failo"<<endl;
+                continue;
+            }
+
+            string eil;
+
+            if(!getline(duom, eil)){
+                cout<<"Failas tuscias"<<endl;
+                duom.close();
+                continue;
+            }
+
+            bool header=false;
+            for(char c : eil){
+                if(isalpha(static_cast<unsigned char>(c))){
+                    header=true;
+                    break;
+                }
+            }
+            if(!header){
+                istringstream ars(eil);
+                stud s;
+                if(ars>>s.vardas>>s.pavarde){
+                    vector<double>vals;
+                    double v;
+                    while(ars>>v) vals.push_back(v);
+                    if(!vals.empty()){
+                        s.egz=vals.back();
+                        vals.pop_back();
+                        s.tarp=move(vals);
+                    }
+                    skaiciuoti(s);
+                    A.push_back(move(s));
+                }
+            }
+
+            while(getline(duom, eil)){
+                if(eil.find_first_not_of(" \t\r\n")==string::npos) continue;
+                istringstream ars(eil);
+                stud s;
+                if(!(ars>>s.vardas>>s.pavarde)) continue;
+                vector<double>vals;
+                double v;
+                while(ars>>v) vals.push_back(v);
+                if(!vals.empty()){
+                    s.egz=vals.back();
+                    vals.pop_back();
+                    s.tarp=move(vals);
+                }
+                skaiciuoti(s);
+                A.push_back(move(s));
+            }
+            duom.close();
+            cout<<"Faile buvo rasta: "<<A.size()<<" stundentu"<<endl;
+
         }
 
         else {
@@ -133,13 +190,31 @@ int main() {
         }
     }
 
-    /*cout<<left<<setw(15)<<"Pavarde"<<left<<setw(15)<<"Vardas"<<right<<setw(20)<<"Galutinis (Vid.)"<<right<<setw(20)<<"Galutinis (Med.)"<<endl;
+    cout<<"1-Rusiavimas pagal varda"<<endl;
+    cout<<"2-Rusiavimas pagal pavarde"<<endl;
+    cout<<"3-Rusiavimas pagal galutini (vidurki)"<<endl;
+    cout<<"4-Rusiavimas pagal galutini (mediana)"<<endl;
+    cout<<"Pasirinkite 1"<<endl;
 
-    cout<<string(70,'-')<<endl;
+    int rus;
+    if(!(cin>>rus)) rus=1;
 
-    for (auto &s:A)
-        cout<<left<<setw(15)<<s.pavarde<<left<<setw(15)<<s.vardas<<right<<setw(20)<<fixed<<setprecision(2)<<s.vid<<right<<setw(20)<<fixed<<setprecision(2)<<s.med<<endl;
-*/
+    switch(rus){
+    case 1:
+        sort(A.begin(), A.end(),[](const stud &a, const stud &b){return a.vardas<b.vardas;});
+        break;
+    case 2:
+        sort(A.begin(), A.end(), [](const stud &a, const stud &b){return a.pavarde<b.pavarde;});
+        break;
+    case 3:
+        sort(A.begin(), A.end(), [](const stud &a, const stud &b){return a.vid>b.vid;});
+        break;
+    case 4:
+        sort(A.begin(), A.end(), [](const stud &a, const stud &b){return a.med>b.med;});
+        break;
+
+    }
+
     spausdinti_lentele(A);
 
     return 0;
