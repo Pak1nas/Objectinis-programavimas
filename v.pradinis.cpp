@@ -74,6 +74,9 @@ void spausdinti_lentele(const vector<stud>& A){
 
 int main() {
     srand(time(NULL));
+
+    cin.exceptions(ios::failbit | ios::badbit);
+
     vector<stud> A;
 
     while (true) {
@@ -83,6 +86,8 @@ int main() {
         cout<<"4-Skaityti is failo"<<endl;
         cout<<"5-Baigti darba"<<endl;
         cout<<"Pasirinkite:"<<endl;
+
+        int  pasirinkimas=s_int();
 
         int pasirinkimas;
 
