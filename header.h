@@ -69,38 +69,36 @@ void spausdinti_lentele(const vector<stud>& A){
     }
 }
 
-void generuoti_studentus(int kiekis) {
-    ofstream is("/tmp/kursiokai.txt");
-    
-    if(!is){
-        cerr<<"nepavyko"<<endl;
-        return;
+void generuoti_studentus(int kiekismok, int kiekpaz) {
+    ofstream is("kursiokai.txt");
+
+    is<<left<<" "<<"Vardas"<<" "<<"Pavarde";
+    for(int i=1; i<=kiekpaz; i++){
+        is<<" "<<("ND" + to_string(i));
+
     }
-    
-    is<<left<<setw(20)<<"Vardas"<<setw(20)<<"Pavarde";
-    for(int i=1; i<=15; i++){
-        is<<setw(8)<<("ND" + to_string(i));
-        is<<setw(8)<<"Egz."<<endl;
-    }
-    
+    is<<" "<<"Egz."<<endl;
+
     static bool ijungtas = false;
     if(!ijungtas){
         srand(time(0));
         ijungtas = true;
     }
-    for(int i=1; i<=kiekis; ++i){
+    for(int i=1; i<=kiekismok; ++i){
         string vardas = "Vardas" + to_string(i);
         string pavarde = "Pavarde" + to_string(i);
-        is << left << setw(20) << vardas << setw(20) << pavarde;
-    }
-    for (int j=0; j<15; ++j){
+        is << vardas << " " << pavarde;
+        for (int j=0; j<kiekpaz; ++j){
         int pazymys = atsitiktinis();
-        is << setw(8)<<pazymys;
+        is << " "<<pazymys;
+        }
+        is<<endl;
     }
-    
+
+
     int egz = atsitiktinis();
-    is << setw(8)<<egz<<endl;
-    
+    is << " "<<egz<<endl;
+
     is.close();
-    
+
 }
