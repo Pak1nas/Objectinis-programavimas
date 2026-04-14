@@ -192,7 +192,16 @@ int main() {
 
     }
 
-    spausdinti_lentele(A);
+    cout<<"Kaip norite kad duomenys butu isvesti"<<endl;
+    cout<<"1-tik ekrane"<<endl;
+    cout<<"2-tik file"<<endl;
+    cout<<"3-ekrane ir file"<<endl;
+    cout<<"Pasirinkite 1"<<endl;
+
+    int pas=0;
+    cin>>pas;
+
+    spausdinti_lentele(A, pas);
 
     return 0;
 }
