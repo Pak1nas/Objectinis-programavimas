@@ -59,14 +59,29 @@ void skaiciuoti(stud &s) {
         s.med=s.tarp[d/2];
 }
 
-void spausdinti_lentele(const vector<stud>& A){
-    cout<<endl<<left<<setw(15)<<"Pavarde"<<left<<setw(15)<<"Vardas"<<right<<setw(20)<<"Galutinis (Vid.)"<<right<<setw(20)<<"Galutinis (Med.)"<<endl;
+void spausdinti_lentele(const vector<stud>& A, int pas){
+    ofstream kiet("kietekai.txt");
+    ofstream varg("vargsiukai.txt");
+    if(pas=1){
+        cout<<endl<<left<<setw(15)<<"Pavarde"<<left<<setw(15)<<"Vardas"<<right<<setw(20)<<"Galutinis (Vid.)"<<right<<setw(20)<<"Galutinis (Med.)"<<endl;
 
-    cout<<string(70, '-')<<endl;
+        cout<<string(70, '-')<<endl;
 
-    for(const auto &s : A){
-        cout<<left<<setw(15)<<s.pavarde<<left<<setw(15)<<s.vardas<<right<<setw(20)<<fixed<<setprecision(2)<<s.vid<<right<<setw(20)<<fixed<<setprecision(2)<<s.med<<endl;
+        for(const auto &s : A){
+            cout<<left<<setw(15)<<s.pavarde<<left<<setw(15)<<s.vardas<<right<<setw(20)<<fixed<<setprecision(2)<<s.vid<<right<<setw(20)<<fixed<<setprecision(2)<<s.med<<endl;
+        }
     }
+    if(pas=2){
+            kiet<<left<<setw(15)<<"Pavarde"<<left<<setw(15)<<"Vardas"<<right<<setw(20)<<"Galutinis (Vid.)"<<right<<setw(20)<<"Galutinis (Med.)"<<endl<<string(70, '-')<<endl;
+            varg<<left<<setw(15)<<"Pavarde"<<left<<setw(15)<<"Vardas"<<right<<setw(20)<<"Galutinis (Vid.)"<<right<<setw(20)<<"Galutinis (Med.)"<<endl<<string(70, '-')<<endl;
+
+
+
+    }
+    if(pas=3){
+
+    }
+
 }
 
 void generuoti_studentus(int kiekismok, int kiekpaz) {
