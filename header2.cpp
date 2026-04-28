@@ -1,0 +1,119 @@
+#include "header.h"
+
+int s_int()
+{
+    while ( true )
+    {
+        try
+        {
+            int x;
+            cin >> x;
+            return x;
+        }
+        catch ( ... )
+        {
+            cin.clear();
+            string kld;
+            getline ( cin, kld );
+            cout << "Klaida: iveskite skaiciu" << endl;
+        }
+    }
+}
+
+double s_double()
+{
+    while ( true )
+    {
+        try
+        {
+            double x;
+            cin >> x;
+            return x;
+        }
+        catch ( ... )
+        {
+            cin.clear();
+            string kld;
+            getline ( cin, kld );
+            cout << "Klaida: iveskite skaiciu" << endl;
+        }
+    }
+}
+
+double atsitiktinis()
+{
+    return rand() % 11;
+}
+
+void skaiciuoti ( stud &s )
+{
+    double sum = s.egz;
+
+    for ( double x : s.tarp ) sum += x;
+
+    s.vid = sum / ( s.tarp.size() + 1 );
+
+    deque<double> kopija = s.tarp;
+    sort ( kopija.begin(), kopija.end() );
+
+    int d = kopija.size();
+
+    if ( d % 2 == 1 )
+        s.med = kopija[d / 2];
+    else
+        s.med = ( kopija[d / 2 - 1] + kopija[d / 2] ) / 2.0;
+}
+
+void spausdinti_lentele ( const deque<stud>& A, int pas )
+{
+    ofstream kiet ( "kietekai.txt" );
+    ofstream varg ( "vargsiukai.txt" );
+
+    if ( pas == 1 || pas == 3 )
+    {
+        cout << endl << left << setw ( 15 ) << "Pavarde" << setw ( 15 ) << "Vardas" << right << setw ( 20 ) << "Galutinis (Vid.)" << setw ( 20 ) << "Galutinis (Med.)" << endl;
+        cout << string ( 70, '-' ) << endl;
+    }
+
+    if ( pas == 2 || pas == 3 )
+    {
+        kiet << left << setw ( 15 ) << "Pavarde" << setw ( 15 ) << "Vardas" << right << setw ( 20 ) << "Galutinis (Vid.)" << setw ( 20 ) << "Galutinis (Med.)" << endl << string ( 70, '-' ) << endl;
+
+        varg << left << setw ( 15 ) << "Pavarde" << setw ( 15 ) << "Vardas" << right << setw ( 20 ) << "Galutinis (Vid.)" << setw ( 20 ) << "Galutinis (Med.)" << endl << string ( 70, '-' ) << endl;
+    }
+
+    for ( const auto &s : A )
+    {
+        if ( pas == 1 || pas == 3 )
+        {
+            cout << left << setw ( 15 ) << s.pavarde << setw ( 15 ) << s.vardas << right << setw ( 20 ) << fixed << setprecision ( 2 ) << s.vid << setw ( 20 ) << s.med << endl;
+        }
+
+        if ( s.vid >= 5 )
+            kiet << s.pavarde << " " << s.vardas << " " << s.vid << " " << s.med << endl;
+        else
+            varg << s.pavarde << " " << s.vardas << " " << s.vid << " " << s.med << endl;
+    }
+}
+
+void generuoti_studentus ( int kiekismok, int kiekpaz )
+{
+    ofstream is ( "kursiokai.txt" );
+
+    is << "Vardas Pavarde";
+
+    for ( int i = 1; i <= kiekpaz; i++ )
+        is << " ND" << i;
+
+    is << " Egz." << endl;
+
+    for ( int i = 1; i <= kiekismok; ++i )
+    {
+        is << "Vardas" << i << " Pavarde" << i;
+
+        for ( int j = 0; j < kiekpaz; ++j )
+            is << " " << atsitiktinis();
+
+        is << " " << atsitiktinis() << endl;
+    }
+}
