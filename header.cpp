@@ -63,6 +63,36 @@ void skaiciuoti ( stud &s )
     else
         s.med = ( kopija[d / 2 - 1] + kopija[d / 2] ) / 2.0;
 }
+void skaidymas(deque<stud>& A, deque<stud>& varg, deque<stud>& kiet, int pas){
+    if(pas==1){
+            for(const auto &s : A){
+                if (s.vid>=5){
+                    kiet.push_back(s);
+                }
+                else
+                    varg.push_back(s);
+            }
+    }
+    if(pas==2){
+        auto it=A.begin();
+        while(it != A.end()){
+            if(it->vid < 5){
+            varg.push_back(*it);
+               it=A.erase(it);
+            }
+            else{
+                ++it;
+            }
+        }
+    }
+    if(pas==3){
+        auto it=std::partition(A.begin(), A.end(), [](const stud& s){return s.vid<5;});
+
+        varg.insert(varg.end(), A.begin(), it);
+        kiet.insert(kiet.end(), it, A.end());
+    }
+}
+
 
 void spausdinti_lentele ( const deque<stud>& A, int pas )
 {
@@ -117,3 +147,4 @@ void generuoti_studentus ( int kiekismok, int kiekpaz )
         is << " " << atsitiktinis() << endl;
     }
 }
+
